@@ -1,0 +1,16 @@
+.input-btn{
+    display: flex;
+    justify-content: center;
+}
+.input-form{
+    margin-right: 5px;
+}
+.input-form:focus{
+    outline: none !important;
+    border-color: black;
+}
+.btn-form{
+    outline: none !important;
+    border:2px solid black;
+    box-shadow: 0 0 10px #719ECE;
+}

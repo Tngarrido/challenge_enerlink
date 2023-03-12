@@ -17,6 +17,7 @@
 .todo-list-content {
   display: flex;
   justify-content: center;
+  flex-direction: column;
 }
 
 .no-todos {
