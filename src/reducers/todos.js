@@ -3,6 +3,7 @@ import { utilsTypes } from "actions/todos";
 
 const initialState = {
   todos : [],
+  newId : 6,
   alert: {
     show: false,
     title: '',
@@ -11,6 +12,8 @@ const initialState = {
     message: ''
   },
 };
+
+
 
 const reducer = (state = initialState, action) => {
     switch (action.type) {
@@ -47,11 +50,26 @@ const reducer = (state = initialState, action) => {
       case todosTypes.POST_IN_SUCCESS:
         return {
             ...state,
+            newId: state.newId + 1,
             todos: [...state.todos, action.result]
         };
       case todosTypes.POST_IN_FAILURE:
         return {
             ...state
+        };
+
+      case todosTypes.DELETE_IN_REQUEST:
+        return {
+                ...state
+        };
+      case todosTypes.DELETE_IN_SUCCESS:
+        return {
+                ...state,
+                todos: state.todos.filter(todo => todo.id !== action.params.id)
+        };
+      case todosTypes.DELETE_IN_FAILURE:
+        return {
+                ...state
         };
       case utilsTypes.SET_ALERT:
         return {

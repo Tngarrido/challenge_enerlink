@@ -1,15 +1,15 @@
 import "./styles.css";
 import { useState } from "react";
 import Button from 'react-bootstrap/Button';
-import {useDispatch} from 'react-redux';
+import {useDispatch, useSelector} from 'react-redux';
 import { requestPostTodos } from "actions/todos";
 import { sendAlert } from "actions/todos";
-import {put} from 'redux-saga/effects';
 
 const TodoForm = () => {
     const [newLabel, setNewLabel] = useState('');
     const dispatch = useDispatch();
-
+    const { todos } = useSelector(state => state);
+    const {newId} = todos;
     const handleInput = e => {
         setNewLabel(e.target.value);
     }
@@ -19,6 +19,7 @@ const TodoForm = () => {
             dispatch(requestPostTodos({
                 "label": newLabel,
                 "checked": false,
+                "id": newId
             }))
         }
         else{

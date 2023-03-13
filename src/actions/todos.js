@@ -8,6 +8,9 @@ export const todosTypes = {
     POST_IN_REQUEST: 'POST_IN_REQUEST',
     POST_IN_SUCCESS: 'POST_IN_SUCCESS',
     POST_IN_FAILURE: 'POST_IN_FAILURE',
+    DELETE_IN_REQUEST: 'DELETE_IN_REQUEST',
+    DELETE_IN_SUCCESS: 'DELETE_IN_SUCCESS',
+    DELETE_IN_FAILURE: 'DELETE_IN_FAILURE',
   };
 
  export const utilsTypes = {
@@ -19,7 +22,8 @@ export const todosTypes = {
 
 export const requestIndexTodos = params => ({
     type: todosTypes.INDEX_IN_REQUEST,
-    params
+    params,
+    algo:""
 });
 
 export const requestPatchTodos = params => ({
@@ -29,6 +33,11 @@ export const requestPatchTodos = params => ({
 
 export const requestPostTodos = params => ({
     type: todosTypes.POST_IN_REQUEST,
+    params
+});
+
+export const requestDeleteTodos = params => ({
+    type: todosTypes.DELETE_IN_REQUEST,
     params
 });
 

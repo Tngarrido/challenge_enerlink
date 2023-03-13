@@ -22,7 +22,7 @@ function* TodoIndexFailureCallback() {
 
 export function* todoIndex(action) {
   yield runDefaultSaga(
-    { request: TodoIndexRequest, params: action.params },
+    { request: TodoIndexRequest, params: action.params, algo: 'a' },
     TodoIndexSuccessCallback,
     TodoIndexFailureCallback
   );
@@ -83,8 +83,37 @@ export function* todoPost(action) {
     );
 }
 
+const TodoDeleteRequest = params => API.delete(`/todos/${params.id}`);
+
+function* TodoDeleteSuccessCallback(result, response, params) {
+    if (result.errors) {
+      throw new Error(result.errors.join('\n'));
+    } else {
+      yield put({ type: todosTypes.DELETE_IN_SUCCESS, result, response, params });
+    }
+  }
+  
+function* TodoDeleteFailureCallback() {
+    yield put(sendAlert({
+        kind: 'error'
+      }));
+    yield put({
+      type: todosTypes.DELETE_IN_FAILURE
+    });
+}
+  
+export function* todoDelete(action) {
+    yield runDefaultSaga(
+      { request: TodoDeleteRequest, params: action.params },
+      TodoDeleteSuccessCallback,
+      TodoDeleteFailureCallback
+    );
+}
+
+
 export default function* todosSagas() {
     yield takeEvery(todosTypes.INDEX_IN_REQUEST, todoIndex);
     yield takeEvery(todosTypes.PATCH_IN_REQUEST, todoPatch);
     yield takeEvery(todosTypes.POST_IN_REQUEST, todoPost);
+    yield takeEvery(todosTypes.DELETE_IN_REQUEST, todoDelete);
   }

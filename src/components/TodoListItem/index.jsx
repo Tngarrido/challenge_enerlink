@@ -1,4 +1,3 @@
-import React from "react";
 import "./styles.css";
 
 const TodoListItem = ({ onCheck, checked, onDelete, label }) => (

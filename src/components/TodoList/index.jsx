@@ -1,45 +1,43 @@
-import React, {useEffect, useState} from "react";
+import {useEffect} from "react";
 import { requestIndexTodos } from "actions/todos";
 import { useDispatch, useSelector } from 'react-redux';
 import TodoListItem from "components/TodoListItem";
-import TodoForm from "components/TodoForm";
-import { requestPatchTodos } from "actions/todos";
+import { requestPatchTodos, requestDeleteTodos } from "actions/todos";
 import "./styles.css";
 
 
-const TodoList = () => {
+const TodoList = ({counterDone, setCounterDonde}) => {
   const {todos: todosObject} = useSelector(state => state);
-  const [loaded, setLoaded] = useState(false);
   const dispatch = useDispatch();
   const {todos} = todosObject;
-  console.log('state', todos);
 
   useEffect(()=>{
     dispatch(requestIndexTodos());
-    setLoaded(true);
-  }, []);
+  }, [dispatch]);
 
-  const handleDelete = (todoId) => {
+  const handleDelete = (todoId, todoChecked) => {
     // Fix an ability to delete task
-
+    todoChecked && setCounterDonde(counterDone > 0 && counterDone - 1);
+    dispatch(requestDeleteTodos({"id":todoId}))
   };
 
   const toggleCheck = (todoId, isChecked) => {
     // Fix an ability to toggle task
-    console.log(todoId, isChecked, 'request ...');
+    isChecked ? setCounterDonde(counterDone < todos.length && counterDone + 1) 
+      : setCounterDonde(counterDone > 0 && counterDone - 1);
     dispatch(requestPatchTodos({
       'id': todoId, 
       'checked': isChecked}));
-    console.log(todoId, isChecked, 'finished ...');
   };
+
 
   return (
     <div className="todo-list">
       <span className="todo-list-title">Things to do:</span>
       { 
-        loaded ? 
+        todos.length ? 
           <div className="todo-list-content">
-            {todos.map((todo) => (<TodoListItem key={todo.id} label={todo.label} onCheck={e =>toggleCheck(todo.id, e.target.checked)}/>))}
+            {todos.map((todo) => (<TodoListItem key={todo.id} label={todo.label} onDelete={() => handleDelete(todo.id, todo.checked) } checked={todo.checked} onCheck={e =>toggleCheck(todo.id, e.target.checked)}/>))}
           </div> :
           <div className="no-todos">
             Looks like you&apos;re absolutely free today!

@@ -1,10 +1,8 @@
-import React from "react";
 import "./styles.css";
 
-const TodoResults = () => {
+const TodoResults = ({counterDone}) => {
   // Fix an ability to calculate completed tasks
-
-  return <div className="todo-results">Done:</div>;
+  return <div className="todo-results">Done: {counterDone}</div>;
 };
 
 export default TodoResults;

@@ -62,6 +62,7 @@ export default class API {
       }
   
     static delete(route, params = {}) {
+    console.log('delete')
       return fetch(url + route, {
         method: 'DELETE',
         body: JSON.stringify(params),

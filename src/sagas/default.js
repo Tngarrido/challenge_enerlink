@@ -7,7 +7,6 @@ const timeoutMessage = 'Está tardando demasiado, verifica tu conexión a intern
 
 function* runDefaultSaga(callRequest, successCallback, failureCallback) {
     try {
-      yield console.log('yield', callRequest)
       const { response, timeout } = yield race({
         response: call(callRequest.request, callRequest.params),
         timeout: delay(globalTimeout)
